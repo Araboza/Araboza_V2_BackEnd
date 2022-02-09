@@ -13,4 +13,11 @@ export class User {
 
   @Column()
   introduce: string;
+
+  @Column()
+  img : string;
+
+  @Column()
+  major : string;
+  
 }

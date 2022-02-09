@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { register } from './entities/register.entity';
+
 import { User } from './entities/user.entity';
 
 @Module({
@@ -18,7 +18,7 @@ import { User } from './entities/user.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [register, User],
+      entities: [User],
       synchronize: true,
     }),
     AuthModule,
