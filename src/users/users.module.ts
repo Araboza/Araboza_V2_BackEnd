@@ -4,7 +4,7 @@ import { register } from 'src/entities/register.entity';
 import { UsersService } from './users.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([register])],
+  imports: [],
   providers: [UsersService],
 })
 export class UsersModule {}
