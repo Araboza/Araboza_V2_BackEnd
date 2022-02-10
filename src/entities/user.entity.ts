@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  OneToOne,
+} from 'typeorm';
+import { Like } from './like.entity';
 import { PostEntity } from './post.entity';
 
 @Entity()
@@ -18,8 +26,9 @@ export class User {
   @Column('simple-array')
   major: string[];
 
-  @Column()
   @OneToMany(() => PostEntity, (post) => post.user)
-  post : PostEntity
-  
+  post: PostEntity[];
+
+  @OneToOne(() => Like, (like) => like.user)
+  like: Like;
 }
