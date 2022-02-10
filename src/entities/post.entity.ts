@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Like } from './like.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -18,7 +26,9 @@ export class PostEntity {
   @Column()
   likeNum: number;
 
-  @Column()
   @ManyToOne(() => User, (user) => user.post)
   user: User;
+
+  @OneToOne(() => Like, (like) => like.post)
+  like: Like;
 }
