@@ -1,15 +1,15 @@
-import { Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PostEntity } from "./post.entity";
-import { User } from "./user.entity";
+import { Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { PostEntity } from './post.entity';
+import { User } from './user.entity';
 
 @Entity()
-export class Like{
-    @PrimaryGeneratedColumn()
-    id : string;
+export class Like {
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @OneToOne(() => User, (user) => user.like)
-    user : User;
+  @OneToOne(() => User, (user) => user.like)
+  user: User;
 
-    @OneToOne(() => PostEntity , (post) => post.like)
-    post : PostEntity;
+  @OneToOne(() => PostEntity, (post) => post.like)
+  post: PostEntity;
 }

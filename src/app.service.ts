@@ -6,6 +6,6 @@ export class AppService {
     return 'Hello World!';
   }
   postS(): string {
-    return 'post!'
+    return 'post!';
   }
 }

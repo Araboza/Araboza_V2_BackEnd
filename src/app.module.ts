@@ -20,7 +20,7 @@ import { Like } from './entities/like.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [User,PostEntity,Like],
+      entities: [User, PostEntity, Like],
       synchronize: true,
     }),
     AuthModule,
