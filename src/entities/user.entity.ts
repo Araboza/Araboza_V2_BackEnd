@@ -1,23 +1,25 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { PostEntity } from './post.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  email: string;
+  id: string;
 
   @Column()
   password: string;
 
   @Column()
-  nickname: string;
-
-  @Column()
   introduce: string;
 
   @Column()
-  img : string;
+  img: string;
+
+  @Column('simple-array')
+  major: string[];
 
   @Column()
-  major : string;
+  @OneToMany(() => PostEntity, (post) => post.user)
+  post : PostEntity
   
 }
