@@ -30,4 +30,7 @@ export class PostEntity {
 
   @OneToOne(() => Like, (like) => like.post)
   like: Like;
+  
+  @Column('simple-array')
+  tags: string[]
 }
