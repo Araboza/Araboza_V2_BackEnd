@@ -5,7 +5,4 @@ export class AppService {
   getHello(): string {
     return 'Hello World!';
   }
-  postS(): string {
-    return 'post!';
-  }
 }
