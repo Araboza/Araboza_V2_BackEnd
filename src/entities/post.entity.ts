@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToOne,
@@ -30,7 +31,10 @@ export class PostEntity {
 
   @OneToOne(() => Like, (like) => like.post)
   like: Like;
-  
+
   @Column('simple-array')
-  tags: string[]
+  tags: string[];
+
+  @CreateDateColumn()
+  createDate: Date;
 }
