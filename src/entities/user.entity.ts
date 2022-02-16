@@ -10,12 +10,12 @@ import { PostEntity } from './post.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({})
   id: string;
 
   @Column()
   password: string;
-
+  
   @Column()
   introduce: string;
 
