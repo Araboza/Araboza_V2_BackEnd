@@ -5,14 +5,16 @@ import {
   Injectable,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from 'src/dto/CreateUser.dto';
+import { loginDataDto } from 'src/dto/loginData.dto';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
-  public async register(registerData) {
+  public async register(registerData: CreateUserDto) {
     const test = await this.usersService.findId(registerData);
-    if (test.length === 0) {
+    if (!test) {
       const hashedPassword = await bcrypt.hash(registerData.password, 10);
       try {
         const createUser = await this.usersService.create({
@@ -31,5 +33,9 @@ export class AuthService {
     } else {
       throw new ConflictException();
     }
+  }
+  public async login(loginData: loginDataDto) {
+    const hashPassword = await this.usersService.login(loginData);
+    const Result = await bcrypt.compare(loginData.password, hashPassword);
   }
 }
