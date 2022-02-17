@@ -1,21 +1,15 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  OneToOne,
-} from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { Like } from './like.entity';
 import { PostEntity } from './post.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn({})
+  @PrimaryColumn()
   id: string;
 
   @Column()
   password: string;
-  
+
   @Column()
   introduce: string;
 

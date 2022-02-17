@@ -7,7 +7,7 @@ import { AuthController } from './auth.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
-  providers: [AuthService,UsersService],
+  providers: [AuthService, UsersService],
   controllers: [AuthController],
 })
 export class AuthModule {}
