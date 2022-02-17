@@ -16,4 +16,8 @@ export class UsersService {
     await this.userRepository.save(User);
     return User;
   }
+  async findId(userData: CreateUserDto) {
+    const result = this.userRepository.find({ id: userData.id });
+    return result;
+  }
 }
