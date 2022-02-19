@@ -30,7 +30,7 @@ export class AuthService {
       } catch (error) {
         throw new HttpException(
           '알 수 없는 오류가 발생하였습니다',
-          HttpStatus.INTERNAL_SERVER_ERROR,
+          HttpStatus.BAD_REQUEST,
         );
       }
     } else {
