@@ -41,7 +41,7 @@ export class AuthService {
     const hashPassword = await this.usersService.login(loginData);
     const Result = await bcrypt.compare(loginData.password, hashPassword); //비밀번호 검사
     if (Result) {
-      const Token = await this.jwtSercice.sign({ id: loginData.id });
+      const Token = await this.getAccessToken(loginData.id);
       return { access_Token: Token };
     } else {
       throw new HttpException(
@@ -49,5 +49,9 @@ export class AuthService {
         HttpStatus.BAD_REQUEST,
       );
     }
+  }
+  public async getAccessToken(id: string) {
+    const token = await this.jwtSercice.sign({ id: id });
+    return token;
   }
 }
