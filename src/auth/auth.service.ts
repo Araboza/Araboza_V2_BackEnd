@@ -38,10 +38,16 @@ export class AuthService {
   }
   public async login(loginData: loginDataDto) {
     const hashPassword = await this.usersService.login(loginData);
-    const Result = await bcrypt.compare(loginData.password, hashPassword); //비밀번호 검사
-    if (Result) {
+    const PasswordResult = await bcrypt.compare(
+      loginData.password,
+      hashPassword,
+    ); //비밀번호 검사
+    if (PasswordResult) {
       if (loginData.accessToken === null) {
         const id = await this.usersService.findId(loginData);
+        const newAccessToken = await this.jwtSercice.sign({ id: id });
+        console.log('액세스토큰', newAccessToken);
+        return { accessToken: newAccessToken };
       }
     } else {
       throw new HttpException(

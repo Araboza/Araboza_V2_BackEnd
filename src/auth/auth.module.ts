@@ -7,14 +7,15 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret: process.env.secret,
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '1d' },
     }),
   ],
