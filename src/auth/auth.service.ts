@@ -25,7 +25,6 @@ export class AuthService {
           password: hashedPassword,
         });
         createUser.password = undefined;
-
         return createUser;
       } catch (error) {
         throw new HttpException(
@@ -41,8 +40,9 @@ export class AuthService {
     const hashPassword = await this.usersService.login(loginData);
     const Result = await bcrypt.compare(loginData.password, hashPassword); //비밀번호 검사
     if (Result) {
-      const Token = await this.getAccessToken(loginData.id);
-      return { access_Token: Token };
+      if (loginData.accessToken === null) {
+        const id = await this.usersService.findId(loginData);
+      }
     } else {
       throw new HttpException(
         '비밀번호가 일치하지 않습니다',
