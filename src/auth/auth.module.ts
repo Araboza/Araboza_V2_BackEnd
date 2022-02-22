@@ -5,13 +5,14 @@ import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: process.env.secret,
       signOptions: { expiresIn: '1d' },
     }),
   ],
