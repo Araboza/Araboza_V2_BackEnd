@@ -9,6 +9,7 @@ import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { loginDataDto } from 'src/dto/loginData.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { truncateSync } from 'fs';
 @Injectable()
 export class AuthService {
   constructor(
@@ -43,24 +44,8 @@ export class AuthService {
       hashPassword,
     ); //비밀번호 검사
     if (PasswordResult) {
-      if (loginData.accessToken === null) {
-        if (loginData.refreshToken === null) {
-          throw new HttpException(
-            '리프레시토큰이없습니다',
-            HttpStatus.BAD_REQUEST,
-          );
-        }
-        const id = await this.usersService.findId(loginData);
-        const newAccessToken = this.jwtSercice.sign({ id: id });
-        console.log('액세스토큰', newAccessToken);
-        return { accessToken: newAccessToken };
-      } else {
-        //액세스토큰은 있을때
-        if (loginData.refreshToken === null) {
-          const newRefreshToken = this.getRefreshToken();
-          return { refreshToken: newRefreshToken };
-        } else {
-        }
+      const test = await this.TestToken(loginData);
+      if (test) {
       }
     } else {
       throw new HttpException(
@@ -76,5 +61,27 @@ export class AuthService {
   public async getRefreshToken() {
     const token = this.jwtSercice.sign({}, { expiresIn: '1d' });
     return token;
+  }
+  public async TestToken(loginData: loginDataDto) {
+    if (loginData.accessToken === null) {
+      if (loginData.refreshToken === null) {
+        throw new HttpException(
+          '리프레시토큰이없습니다',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      const id = await this.usersService.findId(loginData);
+      const newAccessToken = this.jwtSercice.sign({ id: id });
+      console.log('액세스토큰', newAccessToken);
+      return { accessToken: newAccessToken };
+    } else {
+      //액세스토큰은 있을때
+      if (loginData.refreshToken === null) {
+        const newRefreshToken = this.getRefreshToken();
+        return { refreshToken: newRefreshToken };
+      } else {
+        return true;
+      }
+    }
   }
 }
