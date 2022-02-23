@@ -26,4 +26,8 @@ export class UsersService {
     });
     return hashPassword.password;
   }
+  async findOne(id: string) {
+    const user = await this.userRepository.findOne({ id: id });
+    return user;
+  }
 }

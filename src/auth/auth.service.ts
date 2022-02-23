@@ -9,7 +9,6 @@ import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { loginDataDto } from 'src/dto/loginData.dto';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { truncateSync } from 'fs';
 @Injectable()
 export class AuthService {
   constructor(
@@ -46,12 +45,19 @@ export class AuthService {
     if (PasswordResult) {
       const test = await this.TestToken(loginData);
       if (test) {
+        return test;
+      } else {
       }
     } else {
       throw new HttpException(
         '비밀번호가 일치하지 않습니다',
         HttpStatus.BAD_REQUEST,
       );
+    }
+  }
+  public async validate(loginData: loginDataDto) {
+    const user = await this.usersService.findOne(loginData.id);
+    if (user && (await bcrypt.compare(loginData.password, user.password))) {
     }
   }
   public async getAccessToken(id: string) {
@@ -80,7 +86,7 @@ export class AuthService {
         const newRefreshToken = this.getRefreshToken();
         return { refreshToken: newRefreshToken };
       } else {
-        return true;
+        return false;
       }
     }
   }
