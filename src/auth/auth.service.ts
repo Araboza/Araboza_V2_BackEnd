@@ -44,6 +44,12 @@ export class AuthService {
     ); //비밀번호 검사
     if (PasswordResult) {
       if (loginData.accessToken === null) {
+        if (loginData.refreshToken === null) {
+          throw new HttpException(
+            '리프레시토큰이없습니다',
+            HttpStatus.BAD_REQUEST,
+          );
+        }
         const id = await this.usersService.findId(loginData);
         const newAccessToken = await this.jwtSercice.sign({ id: id });
         console.log('액세스토큰', newAccessToken);
