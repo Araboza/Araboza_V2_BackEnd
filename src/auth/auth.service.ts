@@ -51,9 +51,16 @@ export class AuthService {
           );
         }
         const id = await this.usersService.findId(loginData);
-        const newAccessToken = await this.jwtSercice.sign({ id: id });
+        const newAccessToken = this.jwtSercice.sign({ id: id });
         console.log('액세스토큰', newAccessToken);
         return { accessToken: newAccessToken };
+      } else {
+        //액세스토큰은 있을때
+        if (loginData.refreshToken === null) {
+          const newRefreshToken = this.getRefreshToken();
+          return { refreshToken: newRefreshToken };
+        } else {
+        }
       }
     } else {
       throw new HttpException(
@@ -63,7 +70,11 @@ export class AuthService {
     }
   }
   public async getAccessToken(id: string) {
-    const token = await this.jwtSercice.sign({ id: id });
+    const token = this.jwtSercice.sign({ id: id });
+    return token;
+  }
+  public async getRefreshToken() {
+    const token = this.jwtSercice.sign({}, { expiresIn: '1d' });
     return token;
   }
 }
