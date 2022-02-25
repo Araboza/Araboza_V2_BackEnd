@@ -20,12 +20,6 @@ export class UsersService {
     const result = await this.userRepository.findOne({ id: userData.id });
     return result.id;
   }
-  async login(loginData: loginDataDto) {
-    const hashPassword = await this.userRepository.findOne({
-      id: loginData.id,
-    });
-    return hashPassword.password;
-  }
   async findOne(id: string) {
     const user = await this.userRepository.findOne({ id: id });
     return user;

@@ -37,17 +37,13 @@ export class AuthService {
     }
   }
   public async login(loginData: loginDataDto) {
-    const hashPassword = await this.usersService.login(loginData);
+    const hashPassword = await this.usersService.findOne(loginData.id);
     const PasswordResult = await bcrypt.compare(
       loginData.password,
-      hashPassword,
+      hashPassword.password,
     ); //비밀번호 검사
     if (PasswordResult) {
-      const test = await this.TestToken(loginData);
-      if (test) {
-        return test;
-      } else {
-      }
+      return { accessToken: await this.getAccessToken(loginData.id) };
     } else {
       throw new HttpException(
         '비밀번호가 일치하지 않습니다',
@@ -58,7 +54,9 @@ export class AuthService {
   public async validate(loginData: loginDataDto) {
     const user = await this.usersService.findOne(loginData.id);
     if (user && (await bcrypt.compare(loginData.password, user.password))) {
+      return user;
     }
+    return null;
   }
   public async getAccessToken(id: string) {
     const token = this.jwtSercice.sign({ id: id });
