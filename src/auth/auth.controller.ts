@@ -11,7 +11,7 @@ export class AuthController {
   async CreateUser(@Body() registerData: CreateUserDto) {
     await this.authService.register(registerData);
   }
-  @UseGuards(AuthGuard('local'))
+  //@UseGuards(AuthGuard('local'))
   @Post('login')
   async Login(@Body() loginData: loginDataDto) {
     const Token = await this.authService.login(loginData);
