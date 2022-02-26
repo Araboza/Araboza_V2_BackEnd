@@ -71,7 +71,7 @@ export class AuthService {
     const token = this.jwtSercice.sign({}, { expiresIn: '1d' });
     return token;
   }
-  public async TestToken(loginData: loginDataDto) {
+  public async TestToken(loginData) {
     if (loginData.accessToken === null) {
       if (loginData.refreshToken === null) {
         throw new HttpException(

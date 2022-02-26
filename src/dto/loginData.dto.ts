@@ -6,10 +6,4 @@ export class loginDataDto {
 
   @IsString()
   password: string;
-
-  @IsString()
-  accessToken: string;
-
-  @IsString()
-  refreshToken: string;
 }
